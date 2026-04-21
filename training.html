@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Training | Lock n' Load</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<style>
+
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: #eeeeee;
+    background: #121212;
+    overflow-x: hidden;
+}
+
+p {
+    color: #bbbbbb;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ================= NAVBAR with Hamburger ================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f0f0f;
+    padding: 15px 30px;
+    border-bottom: 2px solid #ff8c00;
+    position: relative;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.brand img {
+    width: 50px;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+}
+
+/* Desktop Navigation */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #aaaaaa;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    transition: 0.3s;
+}
+
+.nav-menu li a:hover {
+    color: #ffffff;
+    border-bottom: 2px solid #ff8c00;
+}
+
+/* Hamburger Button - Hidden on desktop */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 28px;
+    height: 2px;
+    background: #ff8c00;
+    margin: 4px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: 100vh;
+        background: #0a0a0a;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        transition: 0.4s ease-in-out;
+        z-index: 1000;
+        border-left: 2px solid #ff8c00;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.5);
+        padding: 80px 20px 40px;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-menu li a {
+        font-size: 18px;
+        padding: 12px 20px;
+        display: block;
+        text-align: center;
+    }
+    
+    .nav-menu li a:hover {
+        border-bottom: none;
+        background: rgba(255,140,0,0.2);
+        border-radius: 4px;
+    }
+    
+    /* Hamburger animation when active */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
+    /* Overlay when menu is open */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* ================= HERO HEADER ================= */
+.page-header {
+    text-align: center;
+    padding: 60px 20px;
+    background: #2c2c2c;
+    border-top: 2px solid #ff8c00;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.page-header p {
+    opacity: 0.85;
+    max-width: 700px;
+    margin: auto;
+    color: #cccccc;
+}
+
+/* ================= TRAINING SECTION ================= */
+.training-section {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.section-title h2 {
+    font-size: 32px;
+    color: #ff8c00;
+    display: inline-block;
+    border-bottom: 2px solid #ff8c00;
+    padding-bottom: 8px;
+}
+
+/* Training Cards Grid */
+.training-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.train-card {
+    background: #1a1a1a;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.train-card:hover {
+    transform: translateY(-6px);
+    border-color: #ff8c00;
+    box-shadow: 0 18px 30px -8px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,140,0,0.2);
+}
+
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.train-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #ffaa33;
+}
+
+.train-card p {
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.train-details {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.train-details span {
+    display: inline-block;
+    font-size: 12px;
+    color: #ff8c00;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+.tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #000000;
+    background: #ff8c00;
+    padding: 5px 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.btn-details {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid #ff8c00;
+    color: #ffaa33;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-details:hover {
+    background: #ff8c00;
+    color: #000000;
+}
+
+/* Instructor / Highlights Section */
+.highlight-section {
+    background: #1a1a1a;
+    border-radius: 4px;
+    padding: 40px 30px;
+    margin: 40px 0;
+    border: 1px solid rgba(255,140,0,0.2);
+}
+
+.highlight-section h3 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #ffaa33;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.highlight-item {
+    text-align: center;
+    padding: 15px;
+}
+.highlight-icon {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+.highlight-item h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #ff8c00;
+}
+.highlight-item p {
+    font-size: 13px;
+}
+
+/* Info Box (additional details) */
+.info-box {
+    background: #0f0f0f;
+    border-left: 4px solid #ff8c00;
+    padding: 25px 30px;
+    margin: 30px 0;
+    border-radius: 4px;
+}
+.info-box h3 {
+    color: #ffaa33;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+.info-box p {
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+.info-box ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.info-box li {
+    color: #bbbbbb;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+/* CTA Section */
+.cta-training {
+    text-align: center;
+    background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
+    padding: 50px 20px;
+    border-radius: 4px;
+    margin: 40px 0 20px;
+    border: 1px solid rgba(255,140,0,0.3);
+}
+.cta-training h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+.cta-training p {
+    max-width: 600px;
+    margin: 0 auto 25px;
+}
+.cta-button {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #ff8c00;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+.cta-button:hover {
+    background: #ffaa33;
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(255,140,0,0.5);
+}
+
+/* ================= FOOTER (exactly same as other pages) ================= */
+footer {
+    background: #0a0a0a;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 60px;
+    padding: 50px 20px 30px;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 180px;
+}
+
+.footer-col h4 {
+    color: #ffaa33;
+    font-size: 18px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: #ff8c00;
+}
+
+.footer-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.footer-logo-area img {
+    width: 55px;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+}
+
+.footer-logo-area span {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e0e0e0;
+    letter-spacing: 1px;
+}
+
+.footer-description {
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    max-width: 260px;
+}
+
+.contact-info p {
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #bbbbbb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-info i.emoji {
+    font-style: normal;
+    font-weight: normal;
+    min-width: 24px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #aaaaaa;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: 0.2s;
+    letter-spacing: 1px;
+}
+
+.social-links a:hover {
+    color: #ff8c00;
+    transform: translateY(-2px);
+}
+
+.hours-text p {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #aaaaaa;
+}
+
+.footer-bottom {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 13px;
+    color: #666666;
+}
+
+.footer-bottom-links {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.footer-bottom-links a {
+    color: #888888;
+    text-decoration: none;
+    margin: 0 8px;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.footer-bottom-links a:hover {
+    color: #ff8c00;
+}
+
+/* ================= ENHANCED RESPONSIVE STYLES ================= */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 20px;
+    }
+    
+    .brand {
+        font-size: 22px;
+    }
+    
+    .brand img {
+        width: 40px;
+    }
+    
+    .page-header {
+        padding: 40px 16px;
+    }
+    
+    .page-header h1 {
+        font-size: 28px;
+    }
+    
+    .page-header p {
+        font-size: 14px;
+    }
+    
+    .training-section {
+        padding: 16px;
+        margin: 20px auto;
+    }
+    
+    .section-title h2 {
+        font-size: 24px;
+    }
+    
+    .training-grid {
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .train-card {
+        padding: 20px 18px;
+    }
+    
+    .train-card h3 {
+        font-size: 18px;
+    }
+    
+    .train-card p {
+        font-size: 13px;
+    }
+    
+    .train-details span {
+        font-size: 11px;
+        margin-right: 10px;
+    }
+    
+    .highlight-section {
+        padding: 30px 20px;
+    }
+    
+    .highlight-section h3 {
+        font-size: 22px;
+    }
+    
+    .highlight-item h4 {
+        font-size: 16px;
+    }
+    
+    .highlight-item p {
+        font-size: 12px;
+    }
+    
+    .info-box {
+        padding: 20px;
+    }
+    
+    .info-box h3 {
+        font-size: 18px;
+    }
+    
+    .info-box p, .info-box li {
+        font-size: 13px;
+    }
+    
+    .cta-training {
+        padding: 35px 20px;
+    }
+    
+    .cta-training h3 {
+        font-size: 22px;
+    }
+    
+    .cta-button {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .footer-col {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .footer-description {
+        max-width: 100%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .footer-logo-area {
+        justify-content: center;
+    }
+    
+    .footer-col h4 {
+        display: block;
+        text-align: center;
+    }
+    
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .contact-info p {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .hours-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand {
+        font-size: 18px;
+        gap: 8px;
+    }
+    
+    .brand img {
+        width: 35px;
+    }
+    
+    .page-header h1 {
+        font-size: 24px;
+    }
+    
+    .page-header p {
+        font-size: 12px;
+    }
+    
+    .section-title h2 {
+        font-size: 20px;
+    }
+    
+    .training-grid {
+        gap: 16px;
+    }
+    
+    .train-card {
+        padding: 16px 14px;
+    }
+    
+    .train-card h3 {
+        font-size: 16px;
+    }
+    
+    .card-icon {
+        font-size: 32px;
+    }
+    
+    .train-details span {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+    
+    .btn-details {
+        padding: 6px 16px;
+        font-size: 11px;
+    }
+    
+    .highlights-grid {
+        gap: 15px;
+    }
+    
+    .highlight-icon {
+        font-size: 30px;
+    }
+    
+    .cta-training h3 {
+        font-size: 18px;
+    }
+    
+    .cta-button {
+        padding: 10px 24px;
+        font-size: 13px;
+    }
+    
+    .footer-bottom-links a {
+        font-size: 10px;
+        margin: 0 5px;
+    }
+    
+    .footer-bottom p {
+        font-size: 11px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .train-card:hover {
+        transform: none;
+    }
+    .train-card:active {
+        transform: scale(0.98);
+    }
+    .btn-details:hover {
+        background: transparent;
+        color: #ffaa33;
+    }
+    .btn-details:active {
+        background: #ff8c00;
+        color: #000000;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR with Hamburger Menu ================= -->
+<div class="navbar">
+    <div class="brand">
+        <img src="images/logo.png" alt="Lock n' Load logo">
+        Lock n' Load
+    </div>
+    
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <nav>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="home.html">HOME</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="membership.html">MEMBERSHIP</a></li>
+            <li><a href="training.html">TRAINING</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Overlay for mobile menu -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- ================= HERO HEADER ================= -->
+<header class="page-header">
+    <h1>Training Programs</h1>
+    <p>Build discipline, skill, and confidence with professional guidance</p>
+</header>
+
+<!-- ================= MAIN TRAINING CONTENT ================= -->
+<div class="training-section">
+
+    <div class="section-title">
+        <h2>Professional Courses</h2>
+    </div>
+
+    <!-- Expanded Training Cards Grid -->
+    <div class="training-grid">
+        <!-- Course 1 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Basic Firearm Safety</h3>
+            <p>Essential rules of firearm handling, safe storage, and responsible usage. Mandatory for first-time shooters before range access.</p>
+            <div class="train-details">
+                <span>⏱ 4 hours</span>
+                <span>👥 Max 8 students</span>
+            </div>
+            <div class="tag">Beginner</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Marksmanship Fundamentals</h3>
+            <p>Master stance, grip, sight alignment, breath control, and trigger squeeze. Perfect for shooters wanting tighter groups.</p>
+            <div class="train-details">
+                <span>⏱ 6 hours (2 sessions)</span>
+                <span>🎖 Certification included</span>
+            </div>
+            <div class="tag">Intermediate</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Speed & Accuracy Drills</h3>
+            <p>Timed drills, target transitions, and shooting under pressure. Improve reaction time without sacrificing precision.</p>
+            <div class="train-details">
+                <span>⏱ 5 hours</span>
+                <span>📊 Performance analysis</span>
+            </div>
+            <div class="tag">Advanced</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Defensive Shooting</h3>
+            <p>Real-world defensive techniques, situational awareness, cover concepts, and low-light scenarios for personal protection.</p>
+            <div class="train-details">
+                <span>⏱ 8 hours</span>
+                <span>🎓 Role-play drills</span>
+            </div>
+            <div class="tag">Advanced</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+
+        <!-- Course 5 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Concealed Carry (CCW)</h3>
+            <p>Legal knowledge, holster selection, drawing techniques, and scenario-based training for responsible concealed carriers.</p>
+            <div class="train-details">
+                <span>⏱ 8 hours</span>
+                <span>📜 State certification eligible</span>
+            </div>
+            <div class="tag">Intermediate</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+
+        <!-- Course 6 -->
+        <div class="train-card">
+            <div class="card-icon"></div>
+            <h3>Tactical Pistol & Rifle</h3>
+            <p>Dynamic movement, malfunction clearing, reloads under stress, and team tactics for experienced shooters.</p>
+            <div class="train-details">
+                <span>⏱ 2 days (12 hours)</span>
+                <span>🏅 Advanced tactics</span>
+            </div>
+            <div class="tag">Advanced</div>
+            <a href="#" class="btn-details">Learn More →</a>
+        </div>
+    </div>
+
+    <!-- Instructor / Highlights Section -->
+    <div class="highlight-section">
+        <h3>Why Train With Us?</h3>
+        <div class="highlights-grid">
+            <div class="highlight-item">
+                <div class="highlight-icon">🏅</div>
+                <h4>Certified Instructors</h4>
+                <p>NRA & USCCA certified professionals with real-world experience.</p>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-icon">🏢</div>
+                <h4>Modern Facilities</h4>
+                <p>Climate-controlled indoor ranges + outdoor tactical bays.</p>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-icon">📈</div>
+                <h4>Progress Tracking</h4>
+                <p>Pre/post assessments and personalized feedback reports.</p>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-icon">👥</div>
+                <h4>Small Class Sizes</h4>
+                <p>Maximum 8 students per instructor for individual attention.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info Box -->
+    <div class="info-box">
+        <h3>📖 Training Details & Policies</h3>
+        <p><strong>✅ Equipment included:</strong> Firearms, eye/ear protection, and ammunition are provided for all beginner courses. Advanced courses may require personal equipment.</p>
+        <p><strong>✅ Private coaching available:</strong> One-on-one sessions with senior instructors — $85/hour for members, $120/hour for non-members.</p>
+        <p><strong>✅ Group discounts:</strong> Bring 3+ friends and save 15% on any course.</p>
+        <ul>
+            <li>All students must complete a safety waiver before training.</li>
+            <li>Refund policy: Full refund if canceled 7 days prior; 50% refund if canceled within 48 hours.</li>
+            <li>Members receive priority booking and 20% off all training courses.</li>
+        </ul>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-training">
+        <h3>Ready to elevate your skills?</h3>
+        <p>Book your course today and train with the best instructors in the region.</p>
+        <a href="contact.html" class="cta-button">View Schedule & Book →</a>
+    </div>
+</div>
+
+<!-- ================= FOOTER (exactly same as other pages) ================= -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <div class="footer-logo-area">
+                <img src="images/logo.png" alt="Lock n' Load">
+                <span>Lock n' Load</span>
+            </div>
+            <p class="footer-description">Premier indoor & outdoor shooting range. Safety, discipline, and excellence for every shooter.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="contact-info">
+                <p><i class="emoji">📞</i> (555) 782-3665</p>
+                <p><i class="emoji">✉️</i> info@locknloadrange.com</p>
+                <p><i class="emoji">📍</i> 1250 Tactical Way, Austin, TX 78701</p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <div class="social-links">
+                <a href="#">IG</a>
+                <a href="#">FB</a>
+                <a href="#">X</a>
+                <a href="#">YT</a>
+            </div>
+            <div style="margin-top: 24px;">
+                <h4 style="margin-bottom: 12px;">Hours</h4>
+                <div class="hours-text">
+                    <p>Mon - Fri: 9:00 AM – 9:00 PM</p>
+                    <p>Sat - Sun: 8:00 AM – 8:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Range Rules</a>
+            <a href="#">Support</a>
+        </div>
+        <p>&copy; 2026 Lock n' Load Shooting Range. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- ================= JAVASCRIPT for Hamburger Menu ================= -->
+<script>
+    // Hamburger menu functionality
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    
+    function toggleMenu() {
+        hamburgerBtn.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        
+        // Prevent body scrolling when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+    
+    function closeMenu() {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Event listeners
+    hamburgerBtn.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+    
+    // Close menu when a link is clicked
+    const navLinks = document.querySelectorAll('.nav-menu li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Handle window resize - if resizing to desktop while menu is open, close it
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+</script>
+
+</body>
+</html>
